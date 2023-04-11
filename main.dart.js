@@ -53735,7 +53735,7 @@ A.M1.prototype={
 $0(){A.vN(this.a.e)},
 $S:0}
 A.C4.prototype={
-P(a){var s=null,r=A.C6(new A.ww(A.aiz(s,s,new A.oz("../../assets/img/profile.jpg",s,s)),s),150,250),q=A.dw(s,s,B.cB,s,s,s,s,s,s,s,s,18,s,s,s,s,s,!0,s,s,s,s,s,s,s,s),p=t.D
+P(a){var s=null,r=A.C6(new A.ww(A.aiz(s,s,new A.oz("assets/img/profile.jpg",s,s)),s),150,250),q=A.dw(s,s,B.cB,s,s,s,s,s,s,s,s,18,s,s,s,s,s,!0,s,s,s,s,s,s,s,s),p=t.D
 return A.xf(s,A.a5H(A.a([B.Jw,B.dD,r,B.dD,new A.eZ(B.xI,A.a5H(A.a([A.Ux(s,s,B.cr,s,s,!0,s,A.nh(A.a([A.nh(s,A.dw(s,s,B.a4,s,s,s,s,s,s,s,s,18,s,s,s,s,s,!0,s,s,s,s,s,s,s,s),"Desenvolvedor Flutter.")],t.nO),q,"Ol\xe1, meu nome \xe9 Samuel Lima e sou "),B.jp,s,s,1,B.ar),B.tM,B.Jy,new A.xe(A.jj("https://www.linkedin.com/in/samuellima60/",0,s),A.jj(u.A,0,s),A.jj("mailto:samuelimvu6@gmail.com?subject=Portfolio",0,s),s)],p),B.en,B.c7),s)],p),B.en,B.BZ),B.C,B.ak,s,s,s,s,s,s,s,290)}}
 A.Ru.prototype={
 F(){return"LaunchMode."+this.b}}
