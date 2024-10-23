@@ -43,7 +43,7 @@ Com base nos serviços descobertos, iniciei a enumeração:
 
 Comecei pelo servidor web e procurei por algo que não fosse estático. Encontrei um pagina de upload:
 
-![image.png](https://file.notion.so/f/f/741683d4-87d3-4e6a-b984-48bdf6870242/0eec0986-71ed-46c3-bae4-c54d8668791c/image.png?table=block&id=29bb5c29-426f-484e-b334-1ad51efee56c&spaceId=741683d4-87d3-4e6a-b984-48bdf6870242&expirationTimestamp=1729728000000&signature=2Opuo3e7zlTCug6cVD9IC8RZH4HBYE51o6WQouzgqrQ&downloadName=image.png)
+![image.png](../assets/images/2024-10-19-htb-editorial-0/image1.png)
 
 ## Ganho de Acesso Inicial
 
@@ -53,11 +53,12 @@ Depois de algum tempo testando, encontrei um SSRF no parâmetro **bookurl**, ond
 
 SSRF permite que um atacante faça requisições HTTP arbitrárias a partir do servidor da vítima, muitas vezes com o objetivo de acessar recursos internos da rede.
 
-![image.png](https://file.notion.so/f/f/741683d4-87d3-4e6a-b984-48bdf6870242/a175d039-9ee1-4d4b-9463-e14e36ceed1e/image.png?table=block&id=532e3a79-3b33-428f-98a0-3663a85fba07&spaceId=741683d4-87d3-4e6a-b984-48bdf6870242&expirationTimestamp=1729728000000&signature=LhyxxMgN2eHyChwTLe5DICVFsZPNCy0zxoQTgVaiUsU&downloadName=image.png)
+![image.png](../assets/images/2024-10-19-htb-editorial-0/image2.png)
 
-Então, fui tentando algumas coisas e, ao tentar me conectar com portas locais da máquina, obtive sucesso. Comecei a enviar requisições localmente para portas mais conhecidas e acabei encontrando a porta 5000.
+Então, fui tentando algumas coisas e, ao tentar me conectar com portas locais da máquina, obtive sucesso. 
+Comecei a enviar requisições localmente para portas mais conhecidas e acabei encontrando a porta 5000.
 
-![image.png](https://file.notion.so/f/f/741683d4-87d3-4e6a-b984-48bdf6870242/51faa8bc-69f8-417f-bddc-c0b625416d03/image.png?table=block&id=5d828884-5703-4b1e-80e1-1203c4c75811&spaceId=741683d4-87d3-4e6a-b984-48bdf6870242&expirationTimestamp=1729728000000&signature=8p4QzxXKGY-AkRg1EWnGprMcxcypLwwNASGAf6pqwJ0&downloadName=image.png)
+![image.png](../assets/images/2024-10-19-htb-editorial-0/image3.png)
 
 Ao abrir a resposta recebida, encontrei alguns endpoints:
 
@@ -124,7 +125,7 @@ Então, fiz requisições para cada um deles, até chegar no "**/api/latest/meta
 
 A primeira coisa que fiz ao pegar as credenciais foi tentar logar no SSH, e obtive sucesso.
 
-![image.png](https://file.notion.so/f/f/741683d4-87d3-4e6a-b984-48bdf6870242/e2f0a135-3a59-4c02-abce-6c9e27e9121e/image.png?table=block&id=3c921e3d-e133-4c57-b879-3a4775a36992&spaceId=741683d4-87d3-4e6a-b984-48bdf6870242&expirationTimestamp=1729728000000&signature=OwZBSVAfb65ZnmzA0BrK7sLEutVT-2WwT-xoaXvJLDI&downloadName=image.png)
+![image.png](../assets/images/2024-10-19-htb-editorial-0/image4.png)
 
 ## Escalada de Privilégios - prod
 
@@ -155,20 +156,21 @@ index 61b786f..3373b14 100644
 
 Então usei `su` para logar como o usuário **prod** e obtive sucesso.
 
-![image.png](https://file.notion.so/f/f/741683d4-87d3-4e6a-b984-48bdf6870242/29ddca55-0891-4e18-9bdc-3f453419bde8/image.png?table=block&id=8238fa64-5120-4fa8-9002-f4c0218c5266&spaceId=741683d4-87d3-4e6a-b984-48bdf6870242&expirationTimestamp=1729728000000&signature=SZb4xBse1PVwE0EmzGEBCN6At_yZ_HDe86iEqIoA70s&downloadName=image.png)
+![image.png](../assets/images/2024-10-19-htb-editorial-0/image5.png)
 
 ## Escalada de Privilégios - root
 
-A primeira coisa que fiz ao obter acesso ao usuário **prod** foi verificar as permissões de **sudo** com o comando:.
+A primeira coisa que fiz ao obter acesso ao usuário **prod** foi verificar as permissões de **sudo** com o comando:
 
-![image.png](https://file.notion.so/f/f/741683d4-87d3-4e6a-b984-48bdf6870242/76dd8087-c570-45d0-b5ac-97c0cce04c09/image.png?table=block&id=9b9c675c-d4d3-4ddb-abe8-80d413e32975&spaceId=741683d4-87d3-4e6a-b984-48bdf6870242&expirationTimestamp=1729728000000&signature=43zvd77cLL0pXBmmeohr5OS9Y7coAcNOUZnKVqv5qbU&downloadName=image.png)
+```bash
+sudo -l
+```
+
+![image.png](../assets/images/2024-10-19-htb-editorial-0/image6.png)
 
 Ao revisar o conteúdo do script **clone_prod_change.py**, notei que ele fazia uso de uma biblioteca desconhecida. Com isso, fui em busca de vulnerabilidades associadas a essa biblioteca e descobri a [CVE-2022-24439](https://www.cve.org/CVERecord?id=CVE-2022-24439), uma vulnerabilidade de execução remota de código (RCE).
 
-<aside>
 💡 CVE-2022-24439: "Essa vulnerabilidade explora uma falha na biblioteca X, permitindo que um atacante execute comandos remotamente devido a uma má validação de entradas."
-
-</aside>
 
 Com base nessa vulnerabilidade, consegui explorá-la e ganhar controle sobre a execução do script, o que me permitiu executar comandos arbitrários.
 

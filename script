@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# URL da página que contém as imagens
+URL="https://helix-droplet-0f7.notion.site/Vazamento-de-Seguran-a-aa818c1243664a0288f63e7049d59e6c"
+
+# Cria o diretório para armazenar as imagens, se não existir
+mkdir -p assets/images
+
+# Contador para os nomes das imagens
+COUNTER=1
+
+# Baixa todas as imagens da URL
+wget -r -l1 -H -nd -A png,jpg,jpeg,gif "$URL" -P assets/images
+
+# Renomeia as imagens baixadas
+for IMAGE in assets/images/*.{png,jpg,jpeg,gif}; do
+    if [[ -f "$IMAGE" ]]; then
+        mv "$IMAGE" "assets/images/image${COUNTER}.png"
+        COUNTER=$((COUNTER + 1))
+    fi
+done
+
+echo "Imagens baixadas e renomeadas com sucesso!"
