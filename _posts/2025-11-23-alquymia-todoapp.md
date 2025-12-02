@@ -1,16 +1,9 @@
 ---
 layout: post  
-title: "TodoApp - Alquymia 2025"  
+title: "TodoApp - Alquymia"  
 date:  2025-11-23
 categories: [Web, Mobile, Misc]  
 tags: [Alquymia, CTF]  
----
-
-# TodoApp - Alquymia
-
-**Autor:** Samuel  
-**Dificuldade:** Médio  
-
 ---
 
 ## 📋 Descrição do Desafio
